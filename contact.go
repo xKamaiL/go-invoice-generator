@@ -5,7 +5,7 @@ import (
 	b64 "encoding/base64"
 	"image"
 
-	"github.com/jung-kurt/gofpdf"
+	"github.com/phpdave11/gofpdf"
 )
 
 // Contact contact a company informations

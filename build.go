@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jung-kurt/gofpdf"
 	"github.com/leekchan/accounting"
+	"github.com/phpdave11/gofpdf"
 	"github.com/shopspring/decimal"
 )
 

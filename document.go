@@ -1,6 +1,6 @@
 package generator
 
-import "github.com/jung-kurt/gofpdf"
+import "github.com/phpdave11/gofpdf"
 
 // Document define base document
 type Document struct {

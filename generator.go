@@ -3,7 +3,7 @@ package generator
 
 import (
 	"github.com/creasty/defaults"
-	"github.com/jung-kurt/gofpdf"
+	"github.com/phpdave11/gofpdf"
 )
 
 // New return a new documents with provided types and defaults

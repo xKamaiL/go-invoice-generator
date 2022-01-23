@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/creasty/defaults"
-	"github.com/jung-kurt/gofpdf"
+	"github.com/phpdave11/gofpdf"
 )
 
 // HeaderFooter define header or footer informations on document

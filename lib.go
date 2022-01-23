@@ -1,6 +1,6 @@
 package generator
 
-import "github.com/jung-kurt/gofpdf"
+import "github.com/phpdave11/gofpdf"
 
 var trFunc func(string) string
 
