@@ -7,18 +7,12 @@ import (
 
 func TestNew(t *testing.T) {
 	doc, _ := New(Invoice, &Options{
-		TextTypeInvoice: "FACTURE",
-		TextRefTitle:    "Réàf.",
+		TextTypeInvoice: "ไทเท้ล ภาษาไทย",
 		AutoPrint:       true,
 	})
 
-	doc.SetHeader(&HeaderFooter{
-		Text:       "<center>Cupcake ipsum dolor sit amet bonbon. I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder.</center>",
-		Pagination: true,
-	})
-
 	doc.SetFooter(&HeaderFooter{
-		Text:       "<center>Cupcake ipsum dolor sit amet bonbon. I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder.</center>",
+		Text:       "<center>Cuฟหกpsum dolor sit amet bonbon. I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder.</center>",
 		Pagination: true,
 	})
 
@@ -107,12 +101,10 @@ func TestNew(t *testing.T) {
 	doc.SetDiscount(&Discount{
 		Amount: "1340",
 	})
-
 	pdf, err := doc.Build()
 	if err != nil {
 		t.Errorf(err.Error())
 	}
-
 	err = pdf.OutputFileAndClose("out.pdf")
 
 	if err != nil {

@@ -1,16 +1,14 @@
 package generator
 
-import "github.com/phpdave11/gofpdf"
-
-var trFunc func(string) string
+//var trFunc func(string) string
 
 func encodeString(str string) string {
-	if trFunc == nil {
-		pdf := gofpdf.New("P", "mm", "A4", "")
-		trFunc = pdf.UnicodeTranslatorFromDescriptor("")
-	}
-
-	return trFunc(str)
+	// remove this out
+	//if trFunc == nil {
+	//	pdf := gofpdf.New("P", "mm", "A4", "")
+	//	trFunc = pdf.UnicodeTranslatorFromDescriptor("")
+	//}
+	return str
 }
 
 func (d *Document) typeAsString() string {

@@ -4,16 +4,15 @@ package generator
 type Options struct {
 	AutoPrint bool `json:"auto_print,omitempty"`
 
-	CurrencySymbol    string `default:"€ " json:"currency_symbol,omitempty"`
+	CurrencySymbol    string `default:"฿ " json:"currency_symbol,omitempty"`
 	CurrencyPrecision int    `default:"2" json:"currency_precision,omitempty"`
 	CurrencyDecimal   string `default:"." json:"currency_decimal,omitempty"`
-	CurrencyThousand  string `default:" " json:"currency_thousand,omitempty"`
+	CurrencyThousand  string `default:"," json:"currency_thousand,omitempty"`
 
 	TextTypeInvoice      string `default:"INVOICE" json:"text_type_invoice,omitempty"`
 	TextTypeQuotation    string `default:"QUOTATION" json:"text_type_quotation,omitempty"`
 	TextTypeDeliveryNote string `default:"DELIVERY NOTE" json:"text_type_delivery_note,omitempty"`
 
-	TextRefTitle         string `default:"Ref." json:"text_ref_title,omitempty"`
 	TextVersionTitle     string `default:"Version" json:"text_version_title,omitempty"`
 	TextDateTitle        string `default:"Date" json:"text_date_title,omitempty"`
 	TextPaymentTermTitle string `default:"Payment term" json:"text_payment_term_title,omitempty"`

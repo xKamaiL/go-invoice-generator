@@ -3,7 +3,6 @@ package generator
 import (
 	"bytes"
 	"fmt"
-	"time"
 
 	"github.com/leekchan/accounting"
 	"github.com/phpdave11/gofpdf"
@@ -23,15 +22,6 @@ func (d *Document) Build() (*gofpdf.Fpdf, error) {
 	d.pdf.SetXY(10, 10)
 	d.pdf.SetTextColor(BaseTextColor[0], BaseTextColor[1], BaseTextColor[2])
 
-	// Set header
-	if d.Header != nil {
-		err = d.Header.applyHeader(d, d.pdf)
-
-		if err != nil {
-			return nil, err
-		}
-	}
-
 	// Set footer
 	if d.Footer != nil {
 		err = d.Footer.applyFooter(d, d.pdf)
@@ -43,15 +33,11 @@ func (d *Document) Build() (*gofpdf.Fpdf, error) {
 
 	// Add first page
 	d.pdf.AddPage()
-
-	// Load font
-	d.pdf.SetFont("Helvetica", "", 12)
+	d.pdf.AddUTF8Font("Sarabun", "", "./fonts/sarabun.ttf")
+	d.pdf.AddUTF8Font("Sarabun", "B", "./fonts/sarabun-B.ttf")
 
 	// Appenf document title
 	d.appendTitle(d.pdf)
-
-	// Appenf document metas (ref & version)
-	d.appendMetas(d.pdf)
 
 	// Append company contact to doc
 	companyBottom := d.Company.appendCompanyContactToDoc(d.pdf)
@@ -99,7 +85,6 @@ func (d *Document) Build() (*gofpdf.Fpdf, error) {
 
 func (d *Document) appendTitle(pdf *gofpdf.Fpdf) {
 	title := d.typeAsString()
-
 	// Set x y
 	pdf.SetXY(120, BaseMarginTop)
 
@@ -108,41 +93,14 @@ func (d *Document) appendTitle(pdf *gofpdf.Fpdf) {
 	pdf.Rect(120, BaseMarginTop, 80, 10, "F")
 
 	// Draw text
-	pdf.SetFont("Helvetica", "", 14)
+	pdf.SetFont("Sarabun", "", 14)
 	pdf.CellFormat(80, 10, encodeString(title), "0", 0, "C", false, 0, "")
-}
-
-func (d *Document) appendMetas(pdf *gofpdf.Fpdf) {
-	// Append ref
-	refString := fmt.Sprintf("%s: %s", d.Options.TextRefTitle, d.Ref)
-
-	pdf.SetXY(120, BaseMarginTop+11)
-	pdf.SetFont("Helvetica", "", 8)
-	pdf.CellFormat(80, 4, encodeString(refString), "0", 0, "R", false, 0, "")
-
-	// Append version
-	if len(d.Version) > 0 {
-		versionString := fmt.Sprintf("%s: %s", d.Options.TextVersionTitle, d.Version)
-		pdf.SetXY(120, BaseMarginTop+15)
-		pdf.SetFont("Helvetica", "", 8)
-		pdf.CellFormat(80, 4, encodeString(versionString), "0", 0, "R", false, 0, "")
-	}
-
-	// Append date
-	date := time.Now().Format("02/01/2006")
-	if len(d.Date) > 0 {
-		date = d.Date
-	}
-	dateString := fmt.Sprintf("%s: %s", d.Options.TextDateTitle, date)
-	pdf.SetXY(120, BaseMarginTop+19)
-	pdf.SetFont("Helvetica", "", 8)
-	pdf.CellFormat(80, 4, encodeString(dateString), "0", 0, "R", false, 0, "")
 }
 
 func (d *Document) appendDescription(pdf *gofpdf.Fpdf) {
 	if len(d.Description) > 0 {
 		pdf.SetY(pdf.GetY() + 10)
-		pdf.SetFont("Helvetica", "", 10)
+		pdf.SetFont("Sarabun", "", 10)
 		pdf.MultiCell(190, 5, encodeString(d.Description), "B", "L", false)
 	}
 }
@@ -151,7 +109,7 @@ func (d *Document) drawsTableTitles(pdf *gofpdf.Fpdf) {
 	// Draw table titles
 	pdf.SetX(10)
 	pdf.SetY(pdf.GetY() + 5)
-	pdf.SetFont("Helvetica", "B", 8)
+	pdf.SetFont("Sarabun", "B", 8)
 
 	// Draw rec
 	pdf.SetFillColor(GreyBgColor[0], GreyBgColor[1], GreyBgColor[2])
@@ -251,7 +209,7 @@ func (d *Document) appendItems(pdf *gofpdf.Fpdf) {
 
 	pdf.SetX(10)
 	pdf.SetY(pdf.GetY() + 8)
-	pdf.SetFont("Helvetica", "", 8)
+	pdf.SetFont("Sarabun", "", 8)
 
 	for i := 0; i < len(d.Items); i++ {
 		item := d.Items[i]
@@ -268,7 +226,7 @@ func (d *Document) appendItems(pdf *gofpdf.Fpdf) {
 			// Add page
 			pdf.AddPage()
 			d.drawsTableTitles(pdf)
-			pdf.SetFont("Helvetica", "", 8)
+			pdf.SetFont("Sarabun", "", 8)
 		}
 
 		pdf.SetX(10)
@@ -283,7 +241,7 @@ func (d *Document) appendNotes(pdf *gofpdf.Fpdf) {
 
 	currentY := pdf.GetY()
 
-	pdf.SetFont("Helvetica", "", 9)
+	pdf.SetFont("Sarabun", "", 9)
 	pdf.SetX(BaseMargin)
 	pdf.SetRightMargin(100)
 	pdf.SetY(currentY + 10)
@@ -367,7 +325,7 @@ func (d *Document) appendTotal(pdf *gofpdf.Fpdf) {
 	}
 
 	pdf.SetY(pdf.GetY() + 10)
-	pdf.SetFont("Helvetica", "", LargeTextFontSize)
+	pdf.SetFont("Sarabun", "", LargeTextFontSize)
 	pdf.SetTextColor(BaseTextColor[0], BaseTextColor[1], BaseTextColor[2])
 
 	// Draw TOTAL HT title
@@ -395,7 +353,7 @@ func (d *Document) appendTotal(pdf *gofpdf.Fpdf) {
 
 		// description
 		pdf.SetXY(120, baseY+7.5)
-		pdf.SetFont("Helvetica", "", BaseTextFontSize)
+		pdf.SetFont("Sarabun", "", BaseTextFontSize)
 		pdf.SetTextColor(GreyTextColor[0], GreyTextColor[1], GreyTextColor[2])
 
 		var descString bytes.Buffer
@@ -415,7 +373,7 @@ func (d *Document) appendTotal(pdf *gofpdf.Fpdf) {
 
 		pdf.CellFormat(38, 7.5, descString.String(), "0", 0, "TR", false, 0, "")
 
-		pdf.SetFont("Helvetica", "", LargeTextFontSize)
+		pdf.SetFont("Sarabun", "", LargeTextFontSize)
 		pdf.SetTextColor(BaseTextColor[0], BaseTextColor[1], BaseTextColor[2])
 
 		// Draw DISCOUNT amount
@@ -461,7 +419,7 @@ func (d *Document) appendPaymentTerm(pdf *gofpdf.Fpdf) {
 		pdf.SetY(pdf.GetY() + 15)
 
 		pdf.SetX(120)
-		pdf.SetFont("Helvetica", "B", 10)
+		pdf.SetFont("Sarabun", "B", 10)
 		pdf.CellFormat(80, 4, paymentTermString, "0", 0, "R", false, 0, "")
 	}
 }

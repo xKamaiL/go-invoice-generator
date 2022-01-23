@@ -6,12 +6,6 @@ func (d *Document) SetType(docType string) *Document {
 	return d
 }
 
-// SetHeader set header of document
-func (d *Document) SetHeader(header *HeaderFooter) *Document {
-	d.Header = header
-	return d
-}
-
 // SetFooter set footer of document
 func (d *Document) SetFooter(footer *HeaderFooter) *Document {
 	d.Footer = footer
